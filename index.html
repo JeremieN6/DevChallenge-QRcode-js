@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Outfit' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<style>
+:root{
+        --font-size-body-text:1rem;
+
+        --black-color: #111729;
+        --light-black-color: #364153;
+        --white-custom-color: #F2F5F9;
+        --blue-color: #3662E3;
+        --hover-btn-color: #254BB8; 
+        --light-blue-color: #4e80ee33;
+        --bg-rounded-qrcode-color: #1E2C51;
+
+        --font-weight-bold: bold;
+        --font-weight-semi-bold: 600;
+        --font-weight-regular: 400;
+    }
+    *{
+        font-family: 'Outfit';
+    }
+    body{
+        background-color: var(--black-color);
+    }
+    .container__title-search,
+    .container__qrcode-view{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 97vh;
+        gap: 20px;
+        position: relative;
+    }
+    .container__search-view{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+    .content__img_title{
+        text-align: center;
+    }
+    .container__search{
+        position: relative; 
+        width: fit-content;
+    }
+    .btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0;
+        border-radius: 10px;
+        width: 8em;
+        height: 50px;
+        cursor: pointer;
+        transition: all 250ms ease-in;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: var(--blue-color);
+        color: var(--white-custom-color);
+        font-size: var(--font-size-body-text);
+    }
+    .qrcBtn{
+        position: absolute; 
+        right: 10px; 
+        top: 50%; 
+        transform: translateY(-50%);
+    }
+    .btn:hover{
+        background-color: var(--hover-btn-color);
+        transform: scale(.95);
+    }
+    .qrcBtn:hover{
+        background-color: var(--hover-btn-color);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+        transform: translateY(-50%) scale(.95);
+    }
+    .input__qrcode{
+        width: 500px;
+        border: 2px solid var(--blue-color);
+        border-radius: 10px;
+        background-color: var(--black-color);
+        height: 60px;
+        color: var(--white-custom-color);
+        padding-left: 20px;
+    }
+    .input__qrcode::placeholder{
+        color: var(--light-black-color);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-body-text);
+    }
+    .container__title-search .content__illustration,
+    .container__qrcode-view .content__illustration {
+        position: absolute;
+        width: 36%;
+        top: 5%;
+        z-index: -10;
+    }
+    .container__qrcode-view{
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 97vh;
+        gap: 20px;
+        position: relative;
+    }
+    .container__qrcode{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 15em;
+    }
+    .content__qrcode{
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 35%;
+        border-radius: 20px;
+        background-color: var(--white-custom-color);
+        padding: 20px;
+    }
+    .background__qrcode{
+        position: absolute;
+        z-index: -5;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 35%;
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        background-color: var(--bg-rounded-qrcode-color);
+    }
+    .container__qrcode-view .img__title{
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+    }
+    .container_ctas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+    .tooltip {
+        visibility: hidden;
+        background-color: var(--blue-color);
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        font-size: 0.9rem;
+        width: 15%;
+        height: 20px;
+    }
+    .tooltip.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+
+</style>
+<body>
+    <div class="container__page">
+        <div class="container__title-search" id="container__title-search">
+            <div class="container__search-view">
+                <div class="content__img_title">
+                    <img src="./assets/images/logo-qr-generator.svg" alt="Logo QRCODE" class="img__title">
+                </div>
+                <div class="container__search">
+                    <input type="text" placeholder="Enter an url" class="input__qrcode" id="urlInput">
+                    <button class="btn qrcBtn" id="qrCode__btn" onclick="getQrcode();">QR code</button>
+                </div>
+            </div>
+            <div class="container__illustration">
+                <img src="./assets/images/bg-illustration.svg" alt="Illustration Background QR Code App" class="content__illustration">
+            </div>
+        </div>
+        <div class="container__qrcode-view" id="container__qrcode-view">
+            <div class="content__img_title">
+                <a href="./index.html">
+                    <img src="./assets/images/logo-qr-generator.svg" alt="Logo QRCODE" class="img__title">
+                </a>
+            </div>
+            <div class="container__qrcode">
+                <div class="background__qrcode"></div>
+                    <div class="content__qrcode" id="content__qrcode">
+                        <div class="qrcode" id="qrcode"></div>
+                    </div>
+                <div class="container_ctas">
+                    <div class="btn" id="download">Download</div>
+                    <div class="btn" id="share">Share</div>
+                    <span class="tooltip" id="tooltip">Copy to clipboard</span>
+                </div>
+            </div>
+            <div class="container__illustration">
+                <img src="./assets/images/bg-illustration.svg" alt="Illustration Background QR Code App" class="content__illustration">
+            </div>
+        </div>
+    </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script type="text/javascript">
+            function isValidURL(string) {
+                const pattern = new RegExp('^(https?:\\/\\/)?' + // protocole (http ou https)
+                    '((([a-zA-Z0-9\\-\\.]+)\\.[a-zA-Z]{2,})|' + // domaine (ex: google.com)
+                    '((\\d{1,3}\\.){3}\\d{1,3}))' + // ou IP (ex: 192.168.0.1)
+                    '(\\:\\d+)?(\\/[-a-zA-Z0-9@:%._\\+~#=]*)*' + // port et chemin
+                    '(\\?[;&a-zA-Z0-9%_\\.\\+=-]*)?' + // query string
+                    '(\\#[-a-zA-Z0-9_]*)?$'); // fragment (hash)
+                return pattern.test(string);
+            }
+
+            function getQrcode(){
+                urlInput = document.getElementById("urlInput");
+                qrCode__btn = document.getElementById("qrCode__btn");
+                qrcodeContainer = document.getElementById("container__qrcode-view");
+                urlContainer = document.getElementById("container__title-search");
+                qrcodeElement = document.getElementById("qrcode");
+                url = urlInput.value;
+                console.log(url);   
+                if (url.trim() === ''){
+                    alert("Veuillez saisir une URL s'il vous plaît. 🙂");
+                }  
+                
+                if (isValidURL(url)) {
+                    qrcodeContainer.style.display = "flex";
+                    urlContainer.style.display = "none";
+
+                    // Nettoyer les QR Codes précédents
+                    qrcodeElement.innerHTML = '';
+
+                    // Générer le QR Code
+                    // new QRCode(qrcodeElement, url);
+                    var qrcode = new QRCode(qrcodeElement, {
+                        text: url,           // Texte ou URL à encoder
+                        width: 150,          // Largeur du QR Code
+                        height: 150,         // Hauteur du QR Code
+                        colorDark: "#000000", // Couleur du QR Code
+                        colorLight: "#ffffff", // Couleur de fond
+                        correctLevel: QRCode.CorrectLevel.H // Niveau de correction d'erreur
+                    });
+
+                } else {
+                    alert("❌ Désolé, cette url n'est pas valide. 😟");
+                }
+            }
+
+            function reset() {
+                const qrcodeContainer = document.getElementById("container__qrcode-view");
+                const urlContainer = document.getElementById("container__title-search");
+                const qrcodeElement = document.getElementById("qrcode");
+
+                // Réinitialiser les champs
+                urlInput.value = '';
+                qrcodeContainer.style.display = "none";
+                urlContainer.style.display = "flex";
+
+                // Nettoyer les QR Codes précédents
+                qrcodeElement.innerHTML = '';
+            }
+                const downloadBtn = document.getElementById('download');
+                const shareBtn = document.getElementById('share');
+                const qrCodeDiv = document.getElementById('content__qrcode');
+
+            // Fonction pour télécharger la div contenant le QR Code
+            downloadBtn.addEventListener('click', () => {
+                html2canvas(qrCodeDiv).then((canvas) => {
+                    // Convertir le canvas en URL d'image
+                    const image = canvas.toDataURL('image/png');
+
+                    // Créer un lien de téléchargement
+                    const a = document.createElement('a');
+                    a.href = image;
+                    a.download = 'qrcode.png';
+                    a.click();
+                });
+            });
+
+
+            document.getElementById('share').addEventListener('click', () => {
+                const urlInput = document.getElementById('urlInput');
+                const tooltip = document.getElementById('tooltip');
+
+                if (urlInput.value.trim() === '') {
+                    alert("Veuillez entrer un texte ou une URL à copier.");
+                    return;
+                }
+
+                // Copier le texte dans le presse-papier
+                navigator.clipboard.writeText(urlInput.value.trim()).then(() => {
+                    // Afficher la bulle "Copy to clipboard"
+                    tooltip.classList.add('visible');
+
+                    // Masquer la bulle après 2 secondes
+                    setTimeout(() => {
+                        tooltip.classList.remove('visible');
+                    }, 2000);
+                }).catch(() => {
+                    alert("Erreur lors de la copie dans le presse-papier.");
+                });
+            });
+
+        </script>
+</body>
+</html>
